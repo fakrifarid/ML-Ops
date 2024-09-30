@@ -1,20 +1,22 @@
-from setuptools import find_packages, setup
+from setuptools import find_packages,setup
 from typing import List
 
-HYP_E_DOT = '-e .'
 
-def get_req(file_path: str) -> List[str]:
+HYP_E_DOT = '-e .'
+def get_req(file_path:str)->List[str]:
     '''
-    This function will return the list of requirements
+    This fun will return the list of requirements
     '''
+    req = []
     with open(file_path) as f_obj:
         req = f_obj.readlines()
-        req = [r.strip() for r in req] 
+        req = [r.replace("\n","") for r in req]
 
-    if HYP_E_DOT in req:
-        req.remove(HYP_E_DOT)
-    
+        if HYP_E_DOT in req:
+            req.remove(HYP_E_DOT)
+        
     return req
+
 
 setup(
     name='MLOps-Project',
@@ -22,5 +24,5 @@ setup(
     author='Fakri',
     author_email='fakrifarid@gmail.com',
     packages=find_packages(),
-    install_requires=get_req('requirements.txt'),
+    include_requires=get_req('requirements.txt'),
 )
